@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
@@ -22,14 +21,14 @@
             <RowConstraints maxHeight="250.0" minHeight="10.0" prefHeight="100.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.rowSpan="3">
+            <VBox fx:id="vBoxContenedorImagenes" alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.rowSpan="3">
                <children>
-                  <StackPane prefHeight="150.0" prefWidth="200.0" />
+                  <StackPane fx:id="stackPaneImagenes" prefHeight="150.0" prefWidth="200.0" />
                </children>
             </VBox>
-            <HBox GridPane.columnIndex="1" GridPane.rowSpan="3">
+            <HBox fx:id="hBoxContenedorLetras" GridPane.columnIndex="1" GridPane.rowSpan="3">
                <children>
-                  <GridPane fx:id="gridPaneContenedorLetras" prefHeight="300.0" prefWidth="300.0">
+                  <GridPane fx:id="gridPaneContenedorLetras">
                     <columnConstraints>
                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -48,11 +47,7 @@
                   </GridPane>
                </children>
             </HBox>
-            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnSpan="2" GridPane.rowIndex="3">
-               <children>
-                  <Label text="Label" />
-               </children>
-            </HBox>
+            <HBox fx:id="hBoxContenedorLabel" alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnSpan="2" GridPane.rowIndex="3" />
          </children>
       </GridPane>
    </children>
