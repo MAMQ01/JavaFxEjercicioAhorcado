@@ -2,18 +2,21 @@ package thiar;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
 public class AppAhorcado implements Initializable {
@@ -22,8 +25,6 @@ public class AppAhorcado implements Initializable {
     GridPane gridPane;
     @FXML
     VBox vBoxContenedorImagenes;
-    @FXML
-    StackPane stackPaneImagenes;
     @FXML
     HBox hBoxContenedorLetras;
     @FXML
@@ -41,7 +42,7 @@ public class AppAhorcado implements Initializable {
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
-        
+
         initializeBotones();
         initializeLabel();
         initializeImagenes();
@@ -73,15 +74,20 @@ public class AppAhorcado implements Initializable {
     }
 
     public void initializeLabel() {
+        vBoxContenedorImagenes.getChildren().clear();
         for (int i = 0; i < secreta.length(); i++) {
-            formatoSecreto+="_ ";
+            formatoSecreto += "_ ";
         }
         actualizarPalabraSecreta();
         hBoxContenedorLabel.getChildren().add(labelPalabraSecreta);
     }
 
     public void initializeImagenes() {
-        
+        String direccionImg = "/img/Hangman-" + 0 + ".png";
+        System.out.println(fallos);
+        Image imagen = new Image(getClass().getResourceAsStream(direccionImg));
+        ImageView imageView = new ImageView(imagen);
+        vBoxContenedorImagenes.getChildren().add(imageView);
     }
 
     public void estaPresionando(Button boton) {
@@ -94,7 +100,6 @@ public class AppAhorcado implements Initializable {
     }
 
     public void comprobarLetra(String c) {
-
         boolean acertada = false;
         letrasPulsadas.add(c.charAt(0));
         c = c.toUpperCase();
@@ -110,51 +115,122 @@ public class AppAhorcado implements Initializable {
             }
             actualizarPalabraSecreta();
         } else {
+            fallos++;
             String direccionImg = "/img/Hangman-" + fallos + ".png";
             System.out.println(fallos);
             Image imagen = new Image(getClass().getResourceAsStream(direccionImg));
             ImageView imageView = new ImageView(imagen);
             vBoxContenedorImagenes.getChildren().clear();
             vBoxContenedorImagenes.getChildren().add(imageView);
-            fallos+=1;
-            
-            if (fallos > MAX_FALLOS) {
-                stackPaneImagenes.getChildren().clear();
+        }
+
+        boolean todasAdivinadas = false;
+        for (int i = 0; i < secreta.length(); i++) {
+            if (letrasPulsadas.contains(secreta.charAt(i))) {
+                todasAdivinadas = true;
+                break;
+            } else {
+                todasAdivinadas = false;
             }
         }
 
-        if (acertada) {
-            System.out.println("has ganado");
-        }
-        if (fallos >= stackPaneImagenes.getChildren().size()) {
-            System.out.println("has fallado: " + fallos + " por lo tanto perdiste");
+        for (int i = 0; i < secreta.length(); i++) {
+            if (!letrasPulsadas.contains(secreta.charAt(i))) {
+                todasAdivinadas = false;
+                break;
+            }
         }
 
-        System.out.println("palabra secreta: " + labelPalabraSecreta.getText());
-        System.out.println("formato secreto: " + formatoSecreto);
-        System.out.println("palabra secreta: " + secreta);
-        
+        if (todasAdivinadas && acertada) {
+            mostrarAlertaVictoria();
+            reiniciarJuego();
+            preguntarRepetirJuego();
+        }
+        if (fallos >= MAX_FALLOS) {
+            mostrarAlertaPerdida();
+            reiniciarJuego();
+            preguntarRepetirJuego();
+        }
+
     }
 
     public void actualizarPalabraSecreta() {
         labelPalabraSecreta.setText(formatoSecreto.trim().toUpperCase());
+        labelPalabraSecreta.setStyle("-fx-text-fill: #FFFFFF; -fx-font-size: 20px;");
     }
-    
+
+    public void mostrarAlertaPerdida() {
+        Alert alerta = new Alert(Alert.AlertType.INFORMATION);
+        alerta.setTitle("Perdiste");
+        alerta.setHeaderText(null);
+        alerta.setContentText("Perdiste la palabra era: " + secreta);
+        alerta.showAndWait();
+    }
+
+    public void mostrarAlertaVictoria() {
+        Alert alerta = new Alert(Alert.AlertType.INFORMATION);
+        Image icono = new Image(getClass().getResourceAsStream("/img/repetir.png"));
+        ImageView imageView = new ImageView(icono);
+        alerta.setGraphic(imageView);
+        alerta.setTitle("Ganaste");
+        alerta.setHeaderText("Has ganado!");
+        alerta.setContentText("Adivinaste la palabra!" + secreta);
+        alerta.showAndWait();
+    }
+
+    public void reiniciarJuego() {
+        for (Button boton : botonesPresionados) {
+            boton.setDisable(false);
+            boton.setStyle("");
+        }
+        formatoSecreto = "";
+        for (int i = 0; i < secreta.length(); i++) {
+            formatoSecreto += "_ ";
+        }
+        actualizarPalabraSecreta();
+        fallos = 0;
+        botonesPresionados.clear();
+        letrasPulsadas.clear();
+        vBoxContenedorImagenes.getChildren().clear();
+        initializeImagenes();
+    }
+
+    public void preguntarRepetirJuego() {
+        Alert alerta = new Alert(Alert.AlertType.CONFIRMATION);
+        Image icono = new Image(getClass().getResourceAsStream("/img/mensaje.png"));
+        ImageView imageView = new ImageView(icono);
+        alerta.setGraphic(imageView);
+        alerta.setTitle("¿Repetir juego?");
+        alerta.setHeaderText(null);
+        alerta.setContentText("¿Deseas jugar de nuevo o salir?");
+
+        ButtonType repetirJuego = new ButtonType("Repetir juego");
+        ButtonType salir = new ButtonType("Salir");
+
+        alerta.getButtonTypes().setAll(repetirJuego, salir);
+
+        alerta.showAndWait().ifPresent(response -> {
+            if (response == repetirJuego) {
+                reiniciarJuego();
+            } else if (response == salir) {
+                confirmacionSalir();
+            }
+        });
+    }
+
+    public void confirmacionSalir() {
+        Alert alerta = new Alert(Alert.AlertType.CONFIRMATION);
+        Image icono = new Image(getClass().getResourceAsStream("/img/exit.png"));
+        ImageView imageView = new ImageView(icono);
+        alerta.setGraphic(imageView);
+        alerta.setTitle("Confirmación");
+        alerta.setContentText("¿Seguro deseas realizar esa accion?");
+        Optional<ButtonType> respuesta = alerta.showAndWait();
+        if (respuesta.isPresent() && respuesta.get() == ButtonType.OK) {
+            Platform.exit();
+        } else {
+            preguntarRepetirJuego();
+        }
+    }
+
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//Error que no entendia, deje la linea de abajo dentro del for i 
-//y me decia que mi version java 21 fallaba al tener en el pom 13 pero cuando cambie 13 a 21
-//ejecutaba pero no cargaba la aplicacion.

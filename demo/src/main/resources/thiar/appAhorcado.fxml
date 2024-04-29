@@ -21,14 +21,14 @@
             <RowConstraints maxHeight="250.0" minHeight="10.0" prefHeight="100.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <VBox fx:id="vBoxContenedorImagenes" alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.rowSpan="3">
+            <VBox fx:id="vBoxContenedorImagenes" alignment="CENTER" prefHeight="200.0" prefWidth="100.0" styleClass="contentedorLetrasImg" stylesheets="@../css/AppAhorcado.css" GridPane.rowSpan="3">
                <children>
                   <StackPane fx:id="stackPaneImagenes" prefHeight="150.0" prefWidth="200.0" />
                </children>
             </VBox>
             <HBox fx:id="hBoxContenedorLetras" GridPane.columnIndex="1" GridPane.rowSpan="3">
                <children>
-                  <GridPane fx:id="gridPaneContenedorLetras">
+                  <GridPane fx:id="gridPaneContenedorLetras" styleClass="contentedorLetrasImg" stylesheets="@../css/AppAhorcado.css">
                     <columnConstraints>
                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -47,7 +47,7 @@
                   </GridPane>
                </children>
             </HBox>
-            <HBox fx:id="hBoxContenedorLabel" alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnSpan="2" GridPane.rowIndex="3" />
+            <HBox fx:id="hBoxContenedorLabel" alignment="CENTER" prefHeight="100.0" prefWidth="200.0" styleClass="contenedorLabel" stylesheets="@../css/AppAhorcado.css" GridPane.columnSpan="2" GridPane.rowIndex="3" />
          </children>
       </GridPane>
    </children>

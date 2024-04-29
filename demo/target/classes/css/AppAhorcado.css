@@ -1,0 +1,24 @@
+
+.contentedorLetrasImg {
+    -fx-background-color: ddfff7;
+}
+
+.button {
+    -fx-font-size: 1rem;
+    -fx-text-fill: #333333;
+}
+
+.button:hover {
+    -fx-background-color: aa4465;
+    -fx-text-fill: #333333;
+}
+
+.button:pressed {
+    -fx-text-fill: #000000;
+    -fx-background-color: #c9c4bb;
+    -fx-font: bold;
+}
+
+.contenedorLabel {
+    -fx-background-color: #1C0D12;
+}
