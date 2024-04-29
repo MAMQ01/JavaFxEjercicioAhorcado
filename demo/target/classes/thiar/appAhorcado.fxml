@@ -4,7 +4,6 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="thiar.AppAhorcado">
@@ -21,11 +20,7 @@
             <RowConstraints maxHeight="250.0" minHeight="10.0" prefHeight="100.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <VBox fx:id="vBoxContenedorImagenes" alignment="CENTER" prefHeight="200.0" prefWidth="100.0" styleClass="contentedorLetrasImg" stylesheets="@../css/AppAhorcado.css" GridPane.rowSpan="3">
-               <children>
-                  <StackPane fx:id="stackPaneImagenes" prefHeight="150.0" prefWidth="200.0" />
-               </children>
-            </VBox>
+            <VBox fx:id="vBoxContenedorImagenes" alignment="CENTER" prefHeight="200.0" prefWidth="100.0" styleClass="contentedorLetrasImg" stylesheets="@../css/AppAhorcado.css" GridPane.rowSpan="3" />
             <HBox fx:id="hBoxContenedorLetras" GridPane.columnIndex="1" GridPane.rowSpan="3">
                <children>
                   <GridPane fx:id="gridPaneContenedorLetras" styleClass="contentedorLetrasImg" stylesheets="@../css/AppAhorcado.css">

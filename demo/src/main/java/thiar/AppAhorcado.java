@@ -21,24 +21,22 @@ import javafx.scene.layout.VBox;
 
 public class AppAhorcado implements Initializable {
 
-    VBox vBoxContenedorPrincipal;
-    GridPane gridPane;
     @FXML
-    VBox vBoxContenedorImagenes;
+    private VBox vBoxContenedorImagenes;
     @FXML
-    HBox hBoxContenedorLetras;
+    private HBox hBoxContenedorLetras;
     @FXML
-    GridPane gridPaneContenedorLetras;
+    private GridPane gridPaneContenedorLetras;
     @FXML
-    HBox hBoxContenedorLabel;
+    private HBox hBoxContenedorLabel;
 
-    ArrayList<Button> botonesPresionados = new ArrayList<>();
-    ArrayList<Character> letrasPulsadas = new ArrayList<>();
-    int fallos;
-    Label labelPalabraSecreta = new Label();
-    String formatoSecreto = "";
-    String secreta = "THIAR";
-    final int MAX_FALLOS = 6;
+    private ArrayList<Button> botonesPresionados = new ArrayList<>();
+    private ArrayList<Character> letrasPulsadas = new ArrayList<>();
+    private int fallos;
+    private Label labelPalabraSecreta = new Label();
+    private String formatoSecreto = "";
+    private String secreta = "THIAR";
+    private final int MAX_FALLOS = 6;
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
@@ -67,7 +65,6 @@ public class AppAhorcado implements Initializable {
             }
             boton.setOnAction(evento -> {
                 estaPresionando(boton);
-                System.out.println(evento.getSource());
                 comprobarLetra(boton.getText());
             });
         }
@@ -84,7 +81,6 @@ public class AppAhorcado implements Initializable {
 
     public void initializeImagenes() {
         String direccionImg = "/img/Hangman-" + 0 + ".png";
-        System.out.println(fallos);
         Image imagen = new Image(getClass().getResourceAsStream(direccionImg));
         ImageView imageView = new ImageView(imagen);
         vBoxContenedorImagenes.getChildren().add(imageView);
@@ -117,7 +113,6 @@ public class AppAhorcado implements Initializable {
         } else {
             fallos++;
             String direccionImg = "/img/Hangman-" + fallos + ".png";
-            System.out.println(fallos);
             Image imagen = new Image(getClass().getResourceAsStream(direccionImg));
             ImageView imageView = new ImageView(imagen);
             vBoxContenedorImagenes.getChildren().clear();
@@ -161,6 +156,9 @@ public class AppAhorcado implements Initializable {
 
     public void mostrarAlertaPerdida() {
         Alert alerta = new Alert(Alert.AlertType.INFORMATION);
+        Image icono = new Image(getClass().getResourceAsStream("/img/ahorcado.png"));
+        ImageView imageView = new ImageView(icono);
+        alerta.setGraphic(imageView);
         alerta.setTitle("Perdiste");
         alerta.setHeaderText(null);
         alerta.setContentText("Perdiste la palabra era: " + secreta);

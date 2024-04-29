@@ -1,6 +1,6 @@
 
 .contentedorLetrasImg {
-    -fx-background-color: ddfff7;
+    -fx-background-color: #ddfff7;
 }
 
 .button {
@@ -9,7 +9,7 @@
 }
 
 .button:hover {
-    -fx-background-color: aa4465;
+    -fx-background-color: #aa4465;
     -fx-text-fill: #333333;
 }
 
